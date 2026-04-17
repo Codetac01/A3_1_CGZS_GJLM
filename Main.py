@@ -4,6 +4,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 
 from Cabo import cabo
+from Camera import Camera
 
 pygame.init()
 
@@ -17,6 +18,7 @@ screen = pygame.display.set_mode((screen_width, screen_height), DOUBLEBUF | OPEN
 pygame.display.set_caption('Cubo 3D')
 
 cubo = cabo()
+camera = Camera()
 
 def initialise():
 
@@ -37,7 +39,10 @@ def initialise():
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-    # rotação simples
+    glLoadIdentity()
+    camera.update()
+
+    # rotação simples (mantida)
     glRotatef(1, 1, 1, 1)
 
     cubo.draw()
@@ -45,6 +50,10 @@ def display():
 
 done = False
 initialise()
+
+# melhora controle da câmera
+pygame.mouse.set_visible(False)
+pygame.event.set_grab(True)
 
 while not done:
     for event in pygame.event.get():
