@@ -1,17 +1,22 @@
 from OpenGL.GL import *
-import  pygame
+import pygame
 
 class cabo:
-    def __init__(self):
+    def __init__(self, largura=1, altura=1, profundidade=1):
+
+        x = largura / 2
+        y = altura / 2
+        z = profundidade / 2
+
         self.vertices = [
-            (0.5, -0.5, 0.5),
-            (-0.5, -0.5, 0.5),
-            (0.5, 0.5, 0.5),
-            (-0.5, 0.5, 0.5),
-            (0.5, 0.5, -0.5),
-            (-0.5, 0.5, -0.5),
-            (0.5, -0.5, -0.5),
-            (-0.5, -0.5, -0.5)
+            ( x, -y,  z),
+            (-x, -y,  z),
+            ( x,  y,  z),
+            (-x,  y,  z),
+            ( x,  y, -z),
+            (-x,  y, -z),
+            ( x, -y, -z),
+            (-x, -y, -z)
         ]
 
         self.triangles = [
@@ -24,7 +29,6 @@ class cabo:
         ]
 
         self.draw_type = GL_LINE_LOOP
-
 
     def draw(self):
         for t in range(0, len(self.triangles), 3):
