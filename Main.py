@@ -18,7 +18,7 @@ screen = pygame.display.set_mode((screen_width, screen_height), DOUBLEBUF | OPEN
 pygame.display.set_caption('Cubo 3D')
 
 
-cubo = cabo(0.1, 2, 0.1)
+cabo_alabarda = cabo(1, 30, 50)
 
 camera = Camera()
 
@@ -46,7 +46,7 @@ def display():
 
     # glRotatef(1, 1, 1, 1)
 
-    cubo.draw()
+    cabo_alabarda.draw()
 
 
 done = False
