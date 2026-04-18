@@ -17,20 +17,19 @@ drawing_color = (1, 1, 1, 1)
 screen = pygame.display.set_mode((screen_width, screen_height), DOUBLEBUF | OPENGL)
 pygame.display.set_caption('Cubo 3D')
 
-cubo = cabo()
+
+cabo_alabarda = cabo(1, 30, 50)
+
 camera = Camera()
 
 def initialise():
 
-    # projeção
     glMatrixMode(GL_PROJECTION)
     glLoadIdentity()
     gluPerspective(60, (screen_width / screen_height), 0.1, 100.0)
 
-    # modelview
     glMatrixMode(GL_MODELVIEW)
     glLoadIdentity()
-    glTranslatef(0, 0, -5)
 
     glViewport(0, 0, screen.get_width(), screen.get_height())
     glEnable(GL_DEPTH_TEST)
@@ -40,20 +39,24 @@ def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
     glLoadIdentity()
+
+
     camera.update()
 
-    # rotação simples (mantida)
-    glRotatef(1, 1, 1, 1)
 
-    cubo.draw()
+    # glRotatef(1, 1, 1, 1)
+
+    cabo_alabarda.draw()
 
 
 done = False
 initialise()
 
-# melhora controle da câmera
+
 pygame.mouse.set_visible(False)
 pygame.event.set_grab(True)
+
+clock = pygame.time.Clock()
 
 while not done:
     for event in pygame.event.get():
@@ -62,6 +65,6 @@ while not done:
 
     display()
     pygame.display.flip()
-    pygame.time.wait(10)
+    clock.tick(60)
 
 pygame.quit()
