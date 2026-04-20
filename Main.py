@@ -3,8 +3,9 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-from Lanca import lanca
-from Cabo import cabo
+from Cabo import Cabo
+from Lanca import Lanca
+from Haste import Haste
 from Camera import Camera
 
 pygame.init()
@@ -17,8 +18,9 @@ background_color = (0, 0, 0, 1)
 screen = pygame.display.set_mode((screen_width, screen_height), DOUBLEBUF | OPENGL)
 pygame.display.set_caption('Cubo 3D')
 
-cabo_alabarda = cabo(1, 30, 8)
-lanca_alabarda = lanca(1, 3, 8)
+cabo_alabarda = Cabo(1, 60, 8)
+lanca_alabarda = Lanca(1, 3, 8)
+haste_alabarda = Haste(1, 1.3, 3, 8)
 
 camera = Camera()
 
@@ -44,6 +46,11 @@ def display():
     glPushMatrix()
     glTranslatef(0, cabo_alabarda.altura / 2, 0)
     lanca_alabarda.draw()
+    glPopMatrix()
+
+    glPushMatrix()
+    glTranslatef(0, cabo_alabarda.altura * (23/60), 0)
+    haste_alabarda.draw()
     glPopMatrix()
 
 done = False

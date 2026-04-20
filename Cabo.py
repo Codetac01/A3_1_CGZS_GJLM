@@ -1,7 +1,7 @@
 from OpenGL.GL import *
 from math import cos, sin, pi
 
-class cabo:
+class Cabo:
     def __init__(self, raio, altura, lados):
         self.vertices = []
 
