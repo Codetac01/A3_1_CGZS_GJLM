@@ -1,9 +1,8 @@
 from OpenGL.GL import *
 from math import cos, sin, pi
 
-class Lanca:
+class lanca:
     def __init__(self, raio, altura, lados):
-
         self.vertices = []
 
         self.raio = raio
@@ -21,7 +20,6 @@ class Lanca:
         self.topo = (0, self.altura, 0)
 
     def draw(self):
-
         glColor3f(0.8, 0.8, 0.8)
         glBegin(GL_LINES)
 
