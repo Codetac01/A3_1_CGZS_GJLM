@@ -3,7 +3,6 @@ from math import cos, sin, pi
 
 class cabo:
     def __init__(self, raio, altura, lados):
-
         self.vertices = []
 
         self.raio = raio
@@ -24,9 +23,7 @@ class cabo:
             z = sin(ang) * self.raio
             self.vertices.append((x, self.altura / 2, z))
 
-
     def draw(self):
-
         glColor3f(0.7, 0.7, 0.7)
         glBegin(GL_LINES)
 
