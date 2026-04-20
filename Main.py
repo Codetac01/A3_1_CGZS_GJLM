@@ -3,7 +3,8 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-from Lanca import lanca
+from Haste import Haste
+from Lanca import Lanca
 from Cabo import cabo
 from Camera import Camera
 
@@ -19,9 +20,9 @@ screen = pygame.display.set_mode((screen_width, screen_height), DOUBLEBUF | OPEN
 pygame.display.set_caption('Cubo 3D')
 
 
-cabo_alabarda = cabo(1, 30, 8)
-lanca_alabarda = lanca(30, 1, 8)
-
+cabo_alabarda = cabo(1, 60, 8)
+lanca = Lanca(1, 5, 8)
+haste = Haste(1, 1.3, 3, 8)
 camera = Camera()
 
 def initialise():
@@ -39,17 +40,23 @@ def initialise():
 
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
     glLoadIdentity()
-
 
     camera.update()
 
-
-    # glRotatef(1, 1, 1, 1)
-
+    # desenha cabo
     cabo_alabarda.draw()
-    lanca_alabarda.draw()
+
+    # move para o topo do cabo
+    glPushMatrix()
+    glTranslatef(0, 30, 0)  # mesma altura do cabo
+    lanca.draw()
+    glPopMatrix()
+
+    glPushMatrix()
+    glTranslatef(0, 22, 0)
+    haste.draw()
+    glPopMatrix()
 
 
 done = False

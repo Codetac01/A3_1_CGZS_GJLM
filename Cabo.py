@@ -33,7 +33,7 @@ class cabo:
         # base
         for i in range(self.lados):
             glVertex3fv(self.vertices[i])
-            glrecomecoVertex3fv(self.vertices[(i + 1) % self.lados])
+            glVertex3fv(self.vertices[(i + 1) % self.lados])
 
         # topo
         for i in range(self.lados):
