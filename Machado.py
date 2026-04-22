@@ -3,45 +3,45 @@ from math import sqrt
 
 
 class Machado:
-    def __init__(self, raio, altura, pontos, largura):
-        meio = altura / 2
+    def __init__(self, raio, altura, pontos, largura, espessura):
+
         self.raio = raio
-        self.espessura = 0.3
+        self.altura = altura
+        self.pontos = pontos
+        self.largura = largura
+        self.espessura = espessura
 
-        z_front = self.espessura / 2
-        z_back = -self.espessura / 2
+        z_frente = self.espessura / 2
+        z_tras = -self.espessura / 2
 
-        # base (encaixe)
-        self.base_top_f = (self.raio, meio, z_front)
-        self.base_bot_f = (self.raio, -meio, z_front)
+        self.base_topo_f = (self.raio, self.altura / 2, z_frente)
+        self.base_baixo_f = (self.raio, -self.altura / 2, z_frente)
+        self.base_topo_t = (self.raio, self.altura / 2, z_tras)
+        self.base_baixo_t = (self.raio, -self.altura / 2, z_tras)
 
-        self.base_top_b = (self.raio, meio, z_back)
-        self.base_bot_b = (self.raio, -meio, z_back)
-
-        # curvas
         self.curva_cima_f = []
         self.curva_baixo_f = []
-        self.curva_cima_b = []
-        self.curva_baixo_b = []
+        self.curva_cima_t = []
+        self.curva_baixo_t = []
 
-        for i in range(pontos):
-            t = i / (pontos - 1)
+        for i in range(self.pontos):
+            t = i / (self.pontos - 1)
 
-            x = self.raio + t * largura
-            y = meio * sqrt(1 - t**2)
+            x = self.raio + t * self.largura
+            y = self.altura / 2 * sqrt(1 - t ** 2)
 
-            self.curva_cima_f.append((x, y, z_front))
-            self.curva_baixo_f.append((x, -y, z_front))
+            self.curva_cima_f.append((x, y, z_frente))
+            self.curva_baixo_f.append((x, -y, z_frente))
 
-            self.curva_cima_b.append((x, y, z_back))
-            self.curva_baixo_b.append((x, -y, z_back))
+            self.curva_cima_t.append((x, y, z_tras))
+            self.curva_baixo_t.append((x, -y, z_tras))
 
     def draw(self):
         glColor3f(0.5, 0.5, 0.5)
 
-        # face da frente
+        # face +z
         glBegin(GL_POLYGON)
-        glVertex3fv(self.base_top_f)
+        glVertex3fv(self.base_topo_f)
 
         for v in self.curva_cima_f:
             glVertex3fv(v)
@@ -49,52 +49,46 @@ class Machado:
         for v in reversed(self.curva_baixo_f):
             glVertex3fv(v)
 
-        glVertex3fv(self.base_bot_f)
-        glEnd()
+        glVertex3fv(self.base_baixo_f)
 
-        # face de trás
-        glBegin(GL_POLYGON)
-        glVertex3fv(self.base_top_b)
+        # face -z
+        glVertex3fv(self.base_topo_t)
 
-        for v in self.curva_cima_b:
+        for v in self.curva_cima_t:
             glVertex3fv(v)
 
-        for v in reversed(self.curva_baixo_b):
+        for v in reversed(self.curva_baixo_t):
             glVertex3fv(v)
 
-        glVertex3fv(self.base_bot_b)
+        glVertex3fv(self.base_baixo_t)
         glEnd()
 
         # lateral de cima
         glBegin(GL_QUADS)
         for i in range(len(self.curva_cima_f) - 1):
+            # lateral de cima
             glVertex3fv(self.curva_cima_f[i])
             glVertex3fv(self.curva_cima_f[i + 1])
-            glVertex3fv(self.curva_cima_b[i + 1])
-            glVertex3fv(self.curva_cima_b[i])
-        glEnd()
+            glVertex3fv(self.curva_cima_t[i + 1])
+            glVertex3fv(self.curva_cima_t[i])
 
-        # lateral de baixo
-        glBegin(GL_QUADS)
-        for i in range(len(self.curva_baixo_f) - 1):
+            # lateral de baixo
             glVertex3fv(self.curva_baixo_f[i])
             glVertex3fv(self.curva_baixo_f[i + 1])
-            glVertex3fv(self.curva_baixo_b[i + 1])
-            glVertex3fv(self.curva_baixo_b[i])
+            glVertex3fv(self.curva_baixo_t[i + 1])
+            glVertex3fv(self.curva_baixo_t[i])
         glEnd()
 
-        # lateral da ponta
+         # lateral da ponta
         glBegin(GL_QUADS)
         glVertex3fv(self.curva_cima_f[-1])
         glVertex3fv(self.curva_baixo_f[-1])
-        glVertex3fv(self.curva_baixo_b[-1])
-        glVertex3fv(self.curva_cima_b[-1])
-        glEnd()
+        glVertex3fv(self.curva_baixo_t[-1])
+        glVertex3fv(self.curva_cima_t[-1])
 
         # lateral do encaixe
-        glBegin(GL_QUADS)
-        glVertex3fv(self.base_top_f)
-        glVertex3fv(self.base_bot_f)
-        glVertex3fv(self.base_bot_b)
-        glVertex3fv(self.base_top_b)
+        glVertex3fv(self.base_topo_f)
+        glVertex3fv(self.base_baixo_f)
+        glVertex3fv(self.base_baixo_t)
+        glVertex3fv(self.base_topo_t)
         glEnd()

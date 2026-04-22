@@ -22,7 +22,7 @@ pygame.display.set_caption('Alabarda 3D')
 cabo_alabarda = Cabo(1, 60, 8)
 lanca_alabarda = Lanca(1, 3, 8)
 haste_alabarda = Haste(1, 1.3, 3, 8)
-machado_alabarda = Machado(1.3, 8, 6, 3)
+machado_alabarda = Machado(1.3, 8, 6, 3, 0.3)
 garra_alabarda = Garra()
 
 camera = Camera()
