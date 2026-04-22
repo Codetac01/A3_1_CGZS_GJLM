@@ -23,36 +23,36 @@ class Garra:
         self.b4 = (4.80, -0.45, zb)
 
     def draw(self):
-        glColor3f(0.75, 0.75, 0.75)
+        glColor3f(1, 1, 1)  # >>> ADICIONADO (necessário pra textura)
 
         # ======================
         # TRIÂNGULO PRINCIPAL
         # ======================
         glBegin(GL_TRIANGLES)
-        glVertex3fv(self.f0)
-        glVertex3fv(self.f1)
-        glVertex3fv(self.f2)
-        glEnd()
 
-        glBegin(GL_TRIANGLES)
-        glVertex3fv(self.b0)
-        glVertex3fv(self.b1)
-        glVertex3fv(self.b2)
+        glTexCoord2f(0, 0); glVertex3fv(self.f0)
+        glTexCoord2f(1, 0); glVertex3fv(self.f1)
+        glTexCoord2f(0.5, 1); glVertex3fv(self.f2)
+
+        glTexCoord2f(0, 0); glVertex3fv(self.b0)
+        glTexCoord2f(1, 0); glVertex3fv(self.b1)
+        glTexCoord2f(0.5, 1); glVertex3fv(self.b2)
+
         glEnd()
 
         # ======================
-        # TRIÂNGULO DA PONTA (novo)
+        # TRIÂNGULO DA PONTA
         # ======================
         glBegin(GL_TRIANGLES)
-        glVertex3fv(self.f2)
-        glVertex3fv(self.f3)
-        glVertex3fv(self.f4)
-        glEnd()
 
-        glBegin(GL_TRIANGLES)
-        glVertex3fv(self.b2)
-        glVertex3fv(self.b3)
-        glVertex3fv(self.b4)
+        glTexCoord2f(0, 0); glVertex3fv(self.f2)
+        glTexCoord2f(1, 0); glVertex3fv(self.f3)
+        glTexCoord2f(0.5, 1); glVertex3fv(self.f4)
+
+        glTexCoord2f(0, 0); glVertex3fv(self.b2)
+        glTexCoord2f(1, 0); glVertex3fv(self.b3)
+        glTexCoord2f(0.5, 1); glVertex3fv(self.b4)
+
         glEnd()
 
         # ======================
@@ -61,29 +61,49 @@ class Garra:
         glBegin(GL_QUADS)
 
         # corpo principal
-        glVertex3fv(self.f0); glVertex3fv(self.f1); glVertex3fv(self.b1); glVertex3fv(self.b0)
-        glVertex3fv(self.f0); glVertex3fv(self.f2); glVertex3fv(self.b2); glVertex3fv(self.b0)
-        glVertex3fv(self.f1); glVertex3fv(self.f2); glVertex3fv(self.b2); glVertex3fv(self.b1)
+        glTexCoord2f(0,0); glVertex3fv(self.f0)
+        glTexCoord2f(1,0); glVertex3fv(self.f1)
+        glTexCoord2f(1,1); glVertex3fv(self.b1)
+        glTexCoord2f(0,1); glVertex3fv(self.b0)
+
+        glTexCoord2f(0,0); glVertex3fv(self.f0)
+        glTexCoord2f(1,0); glVertex3fv(self.f2)
+        glTexCoord2f(1,1); glVertex3fv(self.b2)
+        glTexCoord2f(0,1); glVertex3fv(self.b0)
+
+        glTexCoord2f(0,0); glVertex3fv(self.f1)
+        glTexCoord2f(1,0); glVertex3fv(self.f2)
+        glTexCoord2f(1,1); glVertex3fv(self.b2)
+        glTexCoord2f(0,1); glVertex3fv(self.b1)
 
         # ponta nova
-        glVertex3fv(self.f2); glVertex3fv(self.f3); glVertex3fv(self.b3); glVertex3fv(self.b2)
-        glVertex3fv(self.f2); glVertex3fv(self.f4); glVertex3fv(self.b4); glVertex3fv(self.b2)
-        glVertex3fv(self.f3); glVertex3fv(self.f4); glVertex3fv(self.b4); glVertex3fv(self.b3)
+        glTexCoord2f(0,0); glVertex3fv(self.f2)
+        glTexCoord2f(1,0); glVertex3fv(self.f3)
+        glTexCoord2f(1,1); glVertex3fv(self.b3)
+        glTexCoord2f(0,1); glVertex3fv(self.b2)
+
+        glTexCoord2f(0,0); glVertex3fv(self.f2)
+        glTexCoord2f(1,0); glVertex3fv(self.f4)
+        glTexCoord2f(1,1); glVertex3fv(self.b4)
+        glTexCoord2f(0,1); glVertex3fv(self.b2)
+
+        glTexCoord2f(0,0); glVertex3fv(self.f3)
+        glTexCoord2f(1,0); glVertex3fv(self.f4)
+        glTexCoord2f(1,1); glVertex3fv(self.b4)
+        glTexCoord2f(0,1); glVertex3fv(self.b3)
 
         glEnd()
 
         # ======================
-        # CONTORNO
+        # CONTORNO (mantido)
         # ======================
         glColor3f(0.95, 0.95, 0.95)
         glBegin(GL_LINES)
 
-        # principal frente
         glVertex3fv(self.f0); glVertex3fv(self.f1)
         glVertex3fv(self.f1); glVertex3fv(self.f2)
         glVertex3fv(self.f2); glVertex3fv(self.f0)
 
-        # principal trás
         glVertex3fv(self.b0); glVertex3fv(self.b1)
         glVertex3fv(self.b1); glVertex3fv(self.b2)
         glVertex3fv(self.b2); glVertex3fv(self.b0)

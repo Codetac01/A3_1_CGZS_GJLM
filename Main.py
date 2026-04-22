@@ -79,10 +79,16 @@ def display():
     glDisable(GL_TEXTURE_2D)
 
     # lança
+
+    glEnable(GL_TEXTURE_2D)
+    glBindTexture(GL_TEXTURE_2D, textura_metal)
+
     glPushMatrix()
     glTranslatef(0, cabo_alabarda.altura / 2, 0)
     lanca_alabarda.draw()
     glPopMatrix()
+
+    glDisable(GL_TEXTURE_2D)
 
     # haste
     # textura metal para as partes de metal
@@ -104,6 +110,11 @@ def display():
     glPopMatrix()
 
     # garra / ponta triangular
+
+    # texturização
+    glEnable(GL_TEXTURE_2D)
+    glBindTexture(GL_TEXTURE_2D, textura_metal)
+
     glPushMatrix()
     glTranslatef(0, cabo_alabarda.altura * (23 / 60), 0)
     glScalef(-1, 1, 1)
@@ -111,6 +122,8 @@ def display():
     glRotatef(-2, 0, 0, 1)
     garra_alabarda.draw()
     glPopMatrix()
+
+    glDisable(GL_TEXTURE_2D)
 
 
 done = False
