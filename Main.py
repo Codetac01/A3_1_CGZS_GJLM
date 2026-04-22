@@ -117,7 +117,7 @@ done = False
 initialise()
 
 # carregador de textura
-textura_madeira = load_texture("madeira_textura.jpg.jpg")
+textura_madeira = load_texture("madeira_textura.jpg")
 textura_metal = load_texture("textura_metal.jpg")
 
 pygame.mouse.set_visible(False)
