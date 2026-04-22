@@ -104,10 +104,16 @@ def display():
     glDisable(GL_TEXTURE_2D)
 
     # machado
+
+    glEnable(GL_TEXTURE_2D)
+    glBindTexture(GL_TEXTURE_2D, textura_metal)
+
     glPushMatrix()
     glTranslatef(0, cabo_alabarda.altura * (23 / 60), 0)
     machado_alabarda.draw()
     glPopMatrix()
+
+    glDisable(GL_TEXTURE_2D)
 
     # garra / ponta triangular
 

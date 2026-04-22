@@ -37,58 +37,73 @@ class Machado:
             self.curva_baixo_t.append((x, -y, z_tras))
 
     def draw(self):
-        glColor3f(0.5, 0.5, 0.5)
+        glColor3f(1, 1, 1)  # necessário pra textura
 
         # face +z
         glBegin(GL_POLYGON)
-        glVertex3fv(self.base_topo_f)
 
-        for v in self.curva_cima_f:
+        glTexCoord2f(0,1); glVertex3fv(self.base_topo_f)
+
+        for i, v in enumerate(self.curva_cima_f):
+            glTexCoord2f(i / len(self.curva_cima_f), 1)
             glVertex3fv(v)
 
-        for v in reversed(self.curva_baixo_f):
+        for i, v in enumerate(reversed(self.curva_baixo_f)):
+            glTexCoord2f(i / len(self.curva_baixo_f), 0)
             glVertex3fv(v)
 
-        glVertex3fv(self.base_baixo_f)
+        glTexCoord2f(0,0); glVertex3fv(self.base_baixo_f)
+
+        glEnd()
 
         # face -z
-        glVertex3fv(self.base_topo_t)
+        glBegin(GL_POLYGON)
 
-        for v in self.curva_cima_t:
+        glTexCoord2f(0,1); glVertex3fv(self.base_topo_t)
+
+        for i, v in enumerate(self.curva_cima_t):
+            glTexCoord2f(i / len(self.curva_cima_t), 1)
             glVertex3fv(v)
 
-        for v in reversed(self.curva_baixo_t):
+        for i, v in enumerate(reversed(self.curva_baixo_t)):
+            glTexCoord2f(i / len(self.curva_baixo_t), 0)
             glVertex3fv(v)
 
-        glVertex3fv(self.base_baixo_t)
+        glTexCoord2f(0,0); glVertex3fv(self.base_baixo_t)
+
         glEnd()
 
-        # lateral de cima
+        # lateral de cima e baixo
         glBegin(GL_QUADS)
         for i in range(len(self.curva_cima_f) - 1):
-            # lateral de cima
-            glVertex3fv(self.curva_cima_f[i])
-            glVertex3fv(self.curva_cima_f[i + 1])
-            glVertex3fv(self.curva_cima_t[i + 1])
-            glVertex3fv(self.curva_cima_t[i])
 
-            # lateral de baixo
-            glVertex3fv(self.curva_baixo_f[i])
-            glVertex3fv(self.curva_baixo_f[i + 1])
-            glVertex3fv(self.curva_baixo_t[i + 1])
-            glVertex3fv(self.curva_baixo_t[i])
+            # cima
+            glTexCoord2f(0,0); glVertex3fv(self.curva_cima_f[i])
+            glTexCoord2f(1,0); glVertex3fv(self.curva_cima_f[i + 1])
+            glTexCoord2f(1,1); glVertex3fv(self.curva_cima_t[i + 1])
+            glTexCoord2f(0,1); glVertex3fv(self.curva_cima_t[i])
+
+            # baixo
+            glTexCoord2f(0,0); glVertex3fv(self.curva_baixo_f[i])
+            glTexCoord2f(1,0); glVertex3fv(self.curva_baixo_f[i + 1])
+            glTexCoord2f(1,1); glVertex3fv(self.curva_baixo_t[i + 1])
+            glTexCoord2f(0,1); glVertex3fv(self.curva_baixo_t[i])
+
         glEnd()
 
-         # lateral da ponta
+        # lateral da ponta + encaixe
         glBegin(GL_QUADS)
-        glVertex3fv(self.curva_cima_f[-1])
-        glVertex3fv(self.curva_baixo_f[-1])
-        glVertex3fv(self.curva_baixo_t[-1])
-        glVertex3fv(self.curva_cima_t[-1])
 
-        # lateral do encaixe
-        glVertex3fv(self.base_topo_f)
-        glVertex3fv(self.base_baixo_f)
-        glVertex3fv(self.base_baixo_t)
-        glVertex3fv(self.base_topo_t)
+        # ponta
+        glTexCoord2f(0,0); glVertex3fv(self.curva_cima_f[-1])
+        glTexCoord2f(1,0); glVertex3fv(self.curva_baixo_f[-1])
+        glTexCoord2f(1,1); glVertex3fv(self.curva_baixo_t[-1])
+        glTexCoord2f(0,1); glVertex3fv(self.curva_cima_t[-1])
+
+        # encaixe
+        glTexCoord2f(0,0); glVertex3fv(self.base_topo_f)
+        glTexCoord2f(1,0); glVertex3fv(self.base_baixo_f)
+        glTexCoord2f(1,1); glVertex3fv(self.base_baixo_t)
+        glTexCoord2f(0,1); glVertex3fv(self.base_topo_t)
+
         glEnd()
