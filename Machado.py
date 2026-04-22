@@ -37,7 +37,7 @@ class Machado:
             self.curva_baixo_t.append((x, -y, z_tras))
 
     def draw(self):
-        glColor3f(1, 1, 1)  # necessário pra textura
+        glColor3f(1, 1, 1)  # necessário pra textura freitas
 
         # face +z
         glBegin(GL_POLYGON)
