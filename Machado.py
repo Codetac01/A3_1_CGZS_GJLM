@@ -37,7 +37,6 @@ class Machado:
             self.curva_baixo_t.append((x, -y, z_tras))
 
     def draw(self):
-
         glColor3f(0.5, 0.5, 0.5)
 
         # face +z
@@ -64,6 +63,7 @@ class Machado:
         glVertex3fv(self.base_baixo_t)
         glEnd()
 
+        # lateral de cima
         glBegin(GL_QUADS)
         for i in range(len(self.curva_cima_f) - 1):
             # lateral de cima
