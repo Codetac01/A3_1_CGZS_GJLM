@@ -1,9 +1,9 @@
 from OpenGL.GL import *
 from math import sqrt
 
+
 class Machado:
     def __init__(self, raio, altura, pontos, largura):
-
         meio = altura / 2
         self.raio = raio
         self.espessura = 0.3
@@ -12,8 +12,11 @@ class Machado:
         z_back = -self.espessura / 2
 
         # base (encaixe)
-        self.base_top = (self.raio, meio, 0)
-        self.base_bot = (self.raio, -meio, 0)
+        self.base_top_f = (self.raio, meio, z_front)
+        self.base_bot_f = (self.raio, -meio, z_front)
+
+        self.base_top_b = (self.raio, meio, z_back)
+        self.base_bot_b = (self.raio, -meio, z_back)
 
         # curvas
         self.curva_cima_f = []
@@ -25,7 +28,7 @@ class Machado:
             t = i / (pontos - 1)
 
             x = self.raio + t * largura
-            y = meio * sqrt(1 - t ** 2)
+            y = meio * sqrt(1 - t**2)
 
             self.curva_cima_f.append((x, y, z_front))
             self.curva_baixo_f.append((x, -y, z_front))
@@ -34,37 +37,64 @@ class Machado:
             self.curva_baixo_b.append((x, -y, z_back))
 
     def draw(self):
-
         glColor3f(0.5, 0.5, 0.5)
 
+        # face da frente
         glBegin(GL_POLYGON)
+        glVertex3fv(self.base_top_f)
 
-        # lâmina de cima
-        for v in self.curva_cima:
+        for v in self.curva_cima_f:
             glVertex3fv(v)
 
-        # lâmina de baixo
-        for v in reversed(self.curva_baixo):
+        for v in reversed(self.curva_baixo_f):
             glVertex3fv(v)
 
-        # conexão
-        glVertex3fv(self.base_top)
-        glVertex3fv(self.base_bot)
-
+        glVertex3fv(self.base_bot_f)
         glEnd()
 
-        glBegin(GL_QUADS)
+        # face de trás
+        glBegin(GL_POLYGON)
+        glVertex3fv(self.base_top_b)
 
+        for v in self.curva_cima_b:
+            glVertex3fv(v)
+
+        for v in reversed(self.curva_baixo_b):
+            glVertex3fv(v)
+
+        glVertex3fv(self.base_bot_b)
+        glEnd()
+
+        # lateral de cima
+        glBegin(GL_QUADS)
         for i in range(len(self.curva_cima_f) - 1):
             glVertex3fv(self.curva_cima_f[i])
             glVertex3fv(self.curva_cima_f[i + 1])
             glVertex3fv(self.curva_cima_b[i + 1])
             glVertex3fv(self.curva_cima_b[i])
+        glEnd()
 
+        # lateral de baixo
+        glBegin(GL_QUADS)
         for i in range(len(self.curva_baixo_f) - 1):
             glVertex3fv(self.curva_baixo_f[i])
             glVertex3fv(self.curva_baixo_f[i + 1])
             glVertex3fv(self.curva_baixo_b[i + 1])
             glVertex3fv(self.curva_baixo_b[i])
+        glEnd()
 
+        # lateral da ponta
+        glBegin(GL_QUADS)
+        glVertex3fv(self.curva_cima_f[-1])
+        glVertex3fv(self.curva_baixo_f[-1])
+        glVertex3fv(self.curva_baixo_b[-1])
+        glVertex3fv(self.curva_cima_b[-1])
+        glEnd()
+
+        # lateral do encaixe
+        glBegin(GL_QUADS)
+        glVertex3fv(self.base_top_f)
+        glVertex3fv(self.base_bot_f)
+        glVertex3fv(self.base_bot_b)
+        glVertex3fv(self.base_top_b)
         glEnd()
