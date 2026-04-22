@@ -6,6 +6,7 @@ from OpenGL.GLU import *
 from Cabo import Cabo
 from Lanca import Lanca
 from Haste import Haste
+from Machado import Machado
 from Camera import Camera
 
 pygame.init()
@@ -21,6 +22,7 @@ pygame.display.set_caption('Cubo 3D')
 cabo_alabarda = Cabo(1, 60, 8)
 lanca_alabarda = Lanca(1, 3, 8)
 haste_alabarda = Haste(1, 1.3, 3, 8)
+machado_alabarda = Machado(1.3, 8, 6, 3)
 
 camera = Camera()
 
@@ -53,6 +55,10 @@ def display():
     haste_alabarda.draw()
     glPopMatrix()
 
+    glPushMatrix()
+    glTranslatef(0, cabo_alabarda.altura * (23 / 60), 0)
+    machado_alabarda.draw()
+    glPopMatrix()
 done = False
 initialise()
 
