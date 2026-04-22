@@ -27,6 +27,25 @@ garra_alabarda = Garra()
 
 camera = Camera()
 
+# def para poder carregar as texturas
+def load_texture(path):
+    texture_surface = pygame.image.load(path)
+    texture_data = pygame.image.tostring(texture_surface, "RGB", True)
+    width = texture_surface.get_width()
+    height = texture_surface.get_height()
+
+    texture_id = glGenTextures(1)
+    glBindTexture(GL_TEXTURE_2D, texture_id)
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,
+                 GL_RGB, GL_UNSIGNED_BYTE, texture_data)
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+
+    return texture_id
+
+
 def initialise():
     glClearColor(*background_color)
 
@@ -41,14 +60,23 @@ def initialise():
     glEnable(GL_DEPTH_TEST)
     glLineWidth(2.5)
 
+
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
 
     camera.update()
 
+    # ativação da textura
+    glEnable(GL_TEXTURE_2D)
+
     # cabo
+    # textura madeira do cabo
+    glBindTexture(GL_TEXTURE_2D, textura_madeira)
     cabo_alabarda.draw()
+
+
+    glDisable(GL_TEXTURE_2D)
 
     # lança
     glPushMatrix()
@@ -57,10 +85,17 @@ def display():
     glPopMatrix()
 
     # haste
+    # textura metal para as partes de metal
+    glEnable(GL_TEXTURE_2D)
+    glBindTexture(GL_TEXTURE_2D, textura_metal)
+
     glPushMatrix()
     glTranslatef(0, cabo_alabarda.altura * (23 / 60), 0)
     haste_alabarda.draw()
     glPopMatrix()
+
+
+    glDisable(GL_TEXTURE_2D)
 
     # machado
     glPushMatrix()
@@ -77,8 +112,13 @@ def display():
     garra_alabarda.draw()
     glPopMatrix()
 
+
 done = False
 initialise()
+
+# carregador de textura
+textura_madeira = load_texture("madeira_textura.jpg.jpg")
+textura_metal = load_texture("textura_metal.jpg")
 
 pygame.mouse.set_visible(False)
 pygame.event.set_grab(True)
