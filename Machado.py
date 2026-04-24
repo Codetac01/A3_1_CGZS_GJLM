@@ -37,32 +37,26 @@ class Machado:
             self.curva_baixo_t.append((x, -y, z_tras))
 
     def draw(self):
-        glColor3f(0.5, 0.5, 0.5)
+        glColor3f(1, 1, 1)
 
         # face +z
         glBegin(GL_POLYGON)
+
+        glTexCoord2f(0, 1)
         glVertex3fv(self.base_topo_f)
 
-        for v in self.curva_cima_f:
+        for i, v in enumerate(self.curva_cima_f):
+            glTexCoord2f(i / len(self.curva_cima_f), 1)
             glVertex3fv(v)
 
-        for v in reversed(self.curva_baixo_f):
+        for i, v in enumerate(reversed(self.curva_baixo_f)):
+            glTexCoord2f(i / len(self.curva_baixo_f), 0)
             glVertex3fv(v)
 
+        glTexCoord2f(0, 0)
         glVertex3fv(self.base_baixo_f)
 
-        # face -z
-        glVertex3fv(self.base_topo_t)
-
-        for v in self.curva_cima_t:
-            glVertex3fv(v)
-
-        for v in reversed(self.curva_baixo_t):
-            glVertex3fv(v)
-
-        glVertex3fv(self.base_baixo_t)
         glEnd()
-
         # lateral de cima
         glBegin(GL_QUADS)
         for i in range(len(self.curva_cima_f) - 1):
