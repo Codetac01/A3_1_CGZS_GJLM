@@ -60,6 +60,24 @@ def initialise():
     glEnable(GL_DEPTH_TEST)
     glLineWidth(2.5)
 
+    # adição das texturas
+    glEnable(GL_LIGHTING)
+    glEnable(GL_LIGHT0)
+    glEnable(GL_NORMALIZE)
+
+    # luz
+    glLightfv(GL_LIGHT0, GL_POSITION, (5, 10, 5, 1))
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, (1, 1, 1, 1))
+    glLightfv(GL_LIGHT0, GL_SPECULAR, (1, 1, 1, 1))
+
+    # material (brilho metal)
+    glMaterialfv(GL_FRONT, GL_SPECULAR, (1, 1, 1, 1))
+    glMaterialf(GL_FRONT, GL_SHININESS, 100)
+
+    # permite usar cor + textura
+    glEnable(GL_COLOR_MATERIAL)
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE)
+
 
 def display():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
