@@ -27,7 +27,7 @@ class Lanca:
 
         for i in range(self.lados):
             p1 = self.vertices[i]
-            p2 = self.vertices[(i + 1) % self.lados]
+            p2 = self.vertices[(i + 1) % self.lados
             p3 = self.topo
 
             u1 = i / self.lados
